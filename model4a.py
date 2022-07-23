@@ -26,7 +26,14 @@ class Model4a(QgsProcessingAlgorithm):
         results = {}
         outputs = {}
 
-        # Statistics by categories
+        ############################ 
+        # Statistics by categories # --> esto amely lo tenía despues de fix geometries (ver)
+        ############################ 
+        
+        # Indicamos que por ADMIN de cada país que cuente la cantidad de idiomas. 
+        # Vemos cuantas veces estaba en la base de language cada uno de los países
+        # Guardamos como csv 
+    
         alg_params = {
             'CATEGORIES_FIELD_NAME': ['ADMIN'],
             'INPUT': 'Intersection_19ca7787_0eee_430a_8657_3e9a2370edaf',
@@ -40,7 +47,10 @@ class Model4a(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Fix geometries - countries
+        ##############################
+        # Fix geometries - countries #
+        ##############################
+        
         alg_params = {
             'INPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/Input/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp',
             'OUTPUT': parameters['Fixgeo_countries']
@@ -52,7 +62,10 @@ class Model4a(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Fix geometries - wlds
+        ######################### 
+        # Fix geometries - wlds #
+        #########################
+        
         alg_params = {
             'INPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/output/clean.shp',
             'OUTPUT': parameters['Fixgeo_wlds']
@@ -64,7 +77,13 @@ class Model4a(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Intersection
+        ################
+        # Intersection #
+        ################
+        
+        # Intersecamos "Fix geometries - wlds" y "Fix geometries - countries"
+        # Nos quedamos con "GID" y "ADMIN"
+        
         alg_params = {
             'INPUT': outputs['FixGeometriesWlds']['OUTPUT'],
             'INPUT_FIELDS': ['GID'],
