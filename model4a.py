@@ -30,7 +30,7 @@ class Model4a(QgsProcessingAlgorithm):
         # Statistics by categories # --> esto amely lo tenía despues de fix geometries (ver)
         ############################ 
         
-        # Indicamos que por ADMIN de cada país que cuente la cantidad de idiomas. 
+        # Indicamos que cuente la cantidad de idiomas por ADMIN de cada país. --> chequear
         # Vemos cuantas veces estaba en la base de language cada uno de los países
         # Guardamos como csv 
     
