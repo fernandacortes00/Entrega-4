@@ -45,7 +45,13 @@ class Model4b(QgsProcessingAlgorithm):
         results = {}
         outputs = {}
 
-        # Drop field(s) - coast_lon
+        ############################# 
+        # Drop field(s) - coast_lon # --> 21° comando (min 51)
+        #############################
+        
+        # que hace???
+        # Guarda el archivo final en csv
+      
         alg_params = {
             'COLUMN': ['fid','cat','xcoord','ycoord','fid_2','cat_2','vertex_index','vertex_part','vertex_part','_index','angle\n'],
             'INPUT': 'Calculated_76be0c4b_9407_42d6_b19d_6ba9837acb93',
@@ -58,13 +64,19 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Field calculator - cat adjust
+        ################################# 
+        # Field calculator - cat adjust # --> septimo comando
+        #################################
+        
+        # Correjimos variable cat para poder hacer el merge entre distout y nearout
+        # Queremos que cat comience en cero en ambas layers
+        
         alg_params = {
             'FIELD_LENGTH': 4,
-            'FIELD_NAME': 'cat',
+            'FIELD_NAME': 'cat', #categoría
             'FIELD_PRECISION': 3,
             'FIELD_TYPE': 1,  # Integer
-            'FORMULA': "attribute($currentfeature,'cat')-1",
+            'FORMULA': "attribute($currentfeature,'cat')-1", #le restamos 1 a cada valor de cat
             'INPUT': 'from_output_ba6c78d0_81e2_4d2c_b00b_0224050eb083',
             'OUTPUT': parameters['Nearest_cat_adjust']
         }
@@ -75,7 +87,10 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Add geometry attributes
+        ########################### 
+        # Add geometry attributes # --> 17° comando (min 46:50)
+        ###########################
+        
         alg_params = {
             'CALC_METHOD': 0,  # Layer CRS
             'INPUT': 'Remaining_fields_10bd70da_f1ec_4216_a656_c3348ceda05e',
@@ -88,7 +103,9 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Add geometry attributes
+        ###########################
+        # Add geometry attributes # --> este sera el cuarto que no encontre? SI!
+        ###########################
         alg_params = {
             'CALC_METHOD': 0,  # Layer CRS
             'INPUT': 'Centroids_cb965c88_5460_4be8_9b5d_99d76005ecfd',
@@ -101,7 +118,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Field calculator - cent_lat
+        ############################### 
+        # Field calculator - cent_lat # --> 15° comando (min 42 del video)
+        ###############################
+        
+        #Latitud del centroide
+        
         alg_params = {
             'FIELD_LENGTH': 10,
             'FIELD_NAME': 'cent_lat',
@@ -118,7 +140,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Join attributes by field value
+        ################################## 
+        # Join attributes by field value # --> 13° comando pero no se si lo debería haber hecho antes
+        ##################################
+        
+        #Merge
+        
         alg_params = {
             'DISCARD_NONMATCHING': False,
             'FIELD': 'cat',
@@ -137,7 +164,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Extract vertices
+        #################### 
+        # Extract vertices # --> 11° comando
+        ####################
+        
+        #Utilizamos Centroids_nearest_coast_distance_joined? es el 13° comando
+        
         alg_params = {
             'INPUT': 'Joined_layer_7e820b8b_32f1_498a_bf16_7c406fb57fe0',
             'OUTPUT': parameters['Extract_vertices']
@@ -149,10 +181,15 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Join attributes by field value - centroids y coast
+        ###################################################### 
+        # Join attributes by field value - centroids y coast # --> noveno comando
+        ###################################################### 
+        
+        # Merge 
+        
         alg_params = {
             'DISCARD_NONMATCHING': False,
-            'FIELD': 'ISO_A3',
+            'FIELD': 'ISO_A3', #en lugar de poner ADMIN
             'FIELDS_TO_COPY': [''],
             'FIELD_2': 'ISO_A3',
             'INPUT': 'Remaining_fields_39e3cca1_22b2_4404_a66d_1c7a2b1a8d71',
@@ -168,7 +205,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Drop field(s) - cent_lat_lon
+        ################################ 
+        # Drop field(s) - cent_lat_lon # --> 17° comando
+        ################################
+        
+        # Eliminamos que cosa? (min 46:35)
+        
         alg_params = {
             'COLUMN': ['fid','cat','xcoord','ycoord','fid_2','cat_2','vertex_index','vertex_part','vertex_part','_index','angle\n'],
             'INPUT': 'Calculated_71d21681_82b9_4190_809e_d3cf9a7fe7dc',
@@ -181,7 +223,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Field calculator - coast_lat
+        ################################ 
+        # Field calculator - coast_lat # --> 18° comando
+        ################################
+        
+        #Guardamos xcoord como latitud de la costa
+        
         alg_params = {
             'FIELD_LENGTH': 10,
             'FIELD_NAME': 'coast_lat',
@@ -198,7 +245,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Field calculator - cent_lon
+        ############################### 
+        # Field calculator - cent_lon # --> 16° comando (min 43)
+        ###############################
+        
+        #Longitud del centroide
+        
         alg_params = {
             'FIELD_LENGTH': 10,
             'FIELD_NAME': 'cent_lon',
@@ -215,7 +267,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Field calculator - coast_lon
+        ################################ 
+        # Field calculator - coast_lon # --> 19° comando
+        ################################
+        
+        #Guardamos ycoord como longitud de la costa
+        
         alg_params = {
             'FIELD_LENGTH': 10,
             'FIELD_NAME': 'coast_lon',
@@ -232,7 +289,10 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Drop field(s) - cat_adjust
+        ############################## 
+        # Drop field(s) - cat_adjust # --> octavo comando
+        ##############################
+        
         alg_params = {
             'COLUMN': ['xcoord','ycoord'],
             'INPUT': 'Calculated_0c4b1451_1e51_4123_a16e_24b9cd855cab',
@@ -245,7 +305,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Fix geometries - countries
+        ############################## 
+        # Fix geometries - countries # --> este es el segundo que corre
+        ##############################
+        
+        # Corregimos geometrías en la layer countries
+        
         alg_params = {
             'INPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/Input/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp',
             'OUTPUT': parameters['Fixgeo_countries']
@@ -257,7 +322,11 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Drop field(s) - centroids_w_coord
+        #####################################
+        # Drop field(s) - centroids_w_coord # --> quinto comando
+        #####################################
+        
+        #eliminamos columnas de centroid_w_coord
         alg_params = {
             'COLUMN': ['featurecla','scalerank','LABELRANK','SOVEREIGNT','SOV_A3','ADM0_DIF','LEVEL','TYPE','TLC','ADM0_A3','GEOU_DIF','GEOUNIT','GU_A3','SU_DIF','SUBUNIT','SU_A3','BRK_DIFF','NAME','NAME_LONG','BRK_A3','BRK_NAME','BRK_GROUP','ABBREV','POSTAL','FORMAL_EN','FORMAL_FR','NAME_CIAWF','NOTE_ADM0','NOTE_BRK','NAME_SORT','NAME_ALT','MAPCOLOR7','MAPCOLOR8','MAPCOLOR9','MAPCOLOR13','POP_EST','POP_RANK','POP_YEAR','GDP_MD','GDP_YEAR','ECONOMY','INCOME_GRP','FIPS_10','ISO_A2','ISO_A2_EH','ISO_A3_EH','ISO_N3','ISO_N3_EH','UN_A3','WB_A2','WB_A3','WOE_ID','WOE_ID_EH','WOE_NOTE','ADM0_ISO','ADM0_DIFF','ADM0_TLC','ADM0_A3_US','ADM0_A3_FR','ADM0_A3_RU','ADM0_A3_ES','ADM0_A3_CN','ADM0_A3_TW','ADM0_A3_IN','ADM0_A3_NP','ADM0_A3_PK','ADM0_A3_DE','ADM0_A3_GB','ADM0_A3_BR','ADM0_A3_IL','ADM0_A3_PS','ADM0_A3_SA','ADM0_A3_EG','ADM0_A3_MA','ADM0_A3_PT','ADM0_A3_AR','ADM0_A3_JP','ADM0_A3_KO','ADM0_A3_VN','ADM0_A3_TR','ADM0_A3_ID','ADM0_A3_PL','ADM0_A3_GR','ADM0_A3_IT','ADM0_A3_NL','ADM0_A3_SE','ADM0_A3_BD','ADM0_A3_UA','ADM0_A3_UN','ADM0_A3_WB','CONTINENT','REGION_UN','SUBREGION','REGION_WB','NAME_LEN','LONG_LEN','ABBREV_LEN','TINY','HOMEPART','MIN_ZOOM','MIN_LABEL','MAX_LABEL','LABEL_X','LABEL_Y','NE_ID','WIKIDATAID','NAME_AR','NAME_BN','NAME_DE','NAME_EN','NAME_ES','NAME_FA','NAME_FR','NAME_EL','NAME_HE','NAME_HI','NAME_HU','NAME_ID','NAME_IT','NAME_JA','NAME_KO','NAME_NL','NAME_PL','NAME_PT','NAME_RU','NAME_SV','NAME_TR','NAME_UK','NAME_UR','NAME_VI','NAME_ZH','NAME_ZHT','FCLASS_ISO','TLC_DIFF','FCLASS_TLC','FCLASS_US','FCLASS_FR','FCLASS_RU','FCLASS_ES','FCLASS_CN','FCLASS_TW','FCLASS_IN','FCLASS_NP','FCLASS_PK','FCLASS_DE','FCLASS_GB','FCLASS_BR','FCLASS_IL','FCLASS_PS','FCLASS_SA','FCLASS_EG','FCLASS_MA','FCLASS_PT','FCLASS_AR','FCLASS_JP','FCLASS_KO','FCLASS_VN','FCLASS_TR','FCLASS_ID','FCLASS_PL','FCLASS_GR','FCLASS_IT','FCLASS_NL','FCLASS_SE','FCLASS_BD','FCLASS_UA\n'],
             'INPUT': 'Added_geom_info_5030dd1e_3a92_46dc_bbc0_ad52a2bdf24e',
@@ -265,14 +334,18 @@ class Model4b(QgsProcessingAlgorithm):
         }
         outputs['DropFieldsCentroids_w_coord'] = processing.run('native:deletecolumn', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
         results['Centroidsout'] = outputs['DropFieldsCentroids_w_coord']['OUTPUT']
+        
 
         feedback.setCurrentStep(15)
         if feedback.isCanceled():
             return {}
 
-        # Drop field(s) - fixgeo_coast
+        ################################ 
+        # Drop field(s) - fixgeo_coast # --> cuarto? falta lo de centroids_w_coord
+        ################################
+        
         alg_params = {
-            'COLUMN': ['scalerank'],
+            'COLUMN': ['scalerank'], #eliminamos la columna scalerank
             'INPUT': 'Fixed_geometries_60ce1434_02de_4dd7_8e76_bca42e4815d2',
             'OUTPUT': parameters['Coastout']
         }
@@ -283,7 +356,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Centroids
+        ############# 
+        # Centroids # --> tercer comando que corre
+        ############# 
+        
+        # Calculamos el punto que está en el centro del país (centroide)
+        
         alg_params = {
             'ALL_PARTS': False,
             'INPUT': outputs['FixGeometriesCountries']['OUTPUT'],
@@ -296,7 +374,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # v.distance
+        ##############
+        # v.distance # --> sexto comando
+        ##############
+        
+        #Graficamos la distancia mínima entre el centroide y la costa
+        
         alg_params = {
             'GRASS_MIN_AREA_PARAMETER': 0.0001,
             'GRASS_OUTPUT_TYPE_PARAMETER': 0,  # auto
@@ -305,17 +388,17 @@ class Model4b(QgsProcessingAlgorithm):
             'GRASS_VECTOR_DSCO': '',
             'GRASS_VECTOR_EXPORT_NOCAT': False,
             'GRASS_VECTOR_LCO': '',
-            'column': ['xcoord'],
-            'dmax': -1,
-            'dmin': -1,
+            'column': ['xcoord'], #column name where values specifiec by "upload" option will be uploaded
+            'dmax': -1, #maximum distance (-1 = no limit)
+            'dmin': -1, #minimum distance (-1 = no limit)
             'from': 'Added_geom_info_5030dd1e_3a92_46dc_bbc0_ad52a2bdf24e',
             'from_type': [0,1,3],  # point,line,area
             'to': 'Remaining_fields_411ddfd7_e021_490e_99b7_32ddfe8c8440',
             'to_column': '',
             'to_type': [0,1,3],  # point,line,area
             'upload': [0],  # cat
-            'from_output': parameters['Nearout'],
-            'output': parameters['Disout']
+            'from_output': parameters['Nearout'], #nearest
+            'output': parameters['Disout'] #distance
         }
         outputs['Vdistance'] = processing.run('grass7:v.distance', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
         results['Disout'] = outputs['Vdistance']['output']
@@ -325,7 +408,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Drop field(s) - centroids_coast_joined
+        ########################################## 
+        # Drop field(s) - centroids_coast_joined # --> decimo comando
+        ##########################################
+        
+        #Eliminamos columnas de la layer que creamos anteriormente a partir de join
+        
         alg_params = {
             'COLUMN': ['featurecla','scalerank','LABELRANK','SOVEREIGNT','SOV_A3','ADM0_DIF','LEVEL','TYPE','TLC','ADM0_A3','GEOU_DIF','GEOUNIT','GU_A3','SU_DIF','SUBUNIT','SU_A3','BRK_DIFF','NAME','NAME_LONG','BRK_A3','BRK_NAME','BRK_GROUP','ABBREV','POSTAL','FORMAL_EN','FORMAL_FR','NAME_CIAWF','NOTE_ADM0','NOTE_BRK','NAME_SORT','NAME_ALT','MAPCOLOR7','MAPCOLOR8','MAPCOLOR9','MAPCOLOR13','POP_EST','POP_RANK','POP_YEAR','GDP_MD','GDP_YEAR','ECONOMY','INCOME_GRP','FIPS_10','ISO_A2','ISO_A2_EH','ISO_A3_EH','ISO_N3','ISO_N3_EH','UN_A3','WB_A2','WB_A3','WOE_ID','WOE_ID_EH','WOE_NOTE','ADM0_ISO','ADM0_DIFF','ADM0_TLC','ADM0_A3_US','ADM0_A3_FR','ADM0_A3_RU','ADM0_A3_ES','ADM0_A3_CN','ADM0_A3_TW','ADM0_A3_IN','ADM0_A3_NP','ADM0_A3_PK','ADM0_A3_DE','ADM0_A3_GB','ADM0_A3_BR','ADM0_A3_IL','ADM0_A3_PS','ADM0_A3_SA','ADM0_A3_EG','ADM0_A3_MA','ADM0_A3_PT','ADM0_A3_AR','ADM0_A3_JP','ADM0_A3_KO','ADM0_A3_VN','ADM0_A3_TR','ADM0_A3_ID','ADM0_A3_PL','ADM0_A3_GR','ADM0_A3_IT','ADM0_A3_NL','ADM0_A3_SE','ADM0_A3_BD','ADM0_A3_UA','ADM0_A3_UN','ADM0_A3_WB','CONTINENT','REGION_UN','SUBREGION','REGION_WB','NAME_LEN','LONG_LEN','ABBREV_LEN','TINY','HOMEPART','MIN_ZOOM','MIN_LABEL','MAX_LABEL','LABEL_X','LABEL_Y','NE_ID','WIKIDATAID','NAME_AR','NAME_BN','NAME_DE','NAME_EN','NAME_ES','NAME_FA','NAME_FR','NAME_EL','NAME_HE','NAME_HI','NAME_HU','NAME_ID','NAME_IT','NAME_JA','NAME_KO','NAME_NL','NAME_PL','NAME_PT','NAME_RU','NAME_SV','NAME_TR','NAME_UK','NAME_UR','NAME_VI','NAME_ZH','NAME_ZHT','FCLASS_ISO','TLC_DIFF','FCLASS_TLC','FCLASS_US','FCLASS_FR','FCLASS_RU','FCLASS_ES','FCLASS_CN','FCLASS_TW','FCLASS_IN','FCLASS_NP','FCLASS_PK','FCLASS_DE','FCLASS_GB','FCLASS_BR','FCLASS_IL','FCLASS_PS','FCLASS_SA','FCLASS_EG','FCLASS_MA','FCLASS_PT','FCLASS_AR','FCLASS_JP','FCLASS_KO','FCLASS_VN','FCLASS_TR','FCLASS_ID','FCLASS_PL','FCLASS_GR','FCLASS_IT','FCLASS_NL','FCLASS_SE','FCLASS_BD','FCLASS_UA','ADMIN_2','ISO_A3_2'],
             'INPUT': 'Joined_layer_731e5ec2_ed0e_4efd_9c3d_f23831f85377',
@@ -338,7 +426,9 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Extract by attribute
+        ######################## 
+        # Extract by attribute # --> 12° comando, lo vuelve a correr 14°
+        ########################
         alg_params = {
             'FIELD': 'distance',
             'INPUT': 'Vertices_adbec3f4_25f3_4761_b270_a7b3cd3bfabb',
@@ -353,7 +443,12 @@ class Model4b(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Fix geometries - coast
+        ##########################
+        # Fix geometries - coast # --> 1° primer comando que corre amely
+        ##########################
+         
+        # Corregimos geometrías en la layer coast
+        
         alg_params = {
             'INPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/Input/ne_10m_coastline/ne_10m_coastline.shp',
             'OUTPUT': parameters['Fixgeo_coast']
