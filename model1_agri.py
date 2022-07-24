@@ -28,7 +28,12 @@ class Model1(QgsProcessingAlgorithm):
         results = {}
         outputs = {}
 
-        # Combar (reproyectar)
+        ######################## 
+        # Combar (reproyectar) # 
+        ########################
+        
+       # Reproyectamos para que los países tengan el tamaño correcto
+       
         alg_params = {
             'DATA_TYPE': 0,  # Use Input Layer Data Type
             'EXTRA': '',
@@ -51,7 +56,10 @@ class Model1(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Estadísticas de zona
+        ######################## 
+        # Estadísticas de zona #
+        ########################
+        
         alg_params = {
             'COLUMN_PREFIX': '_',
             'INPUT': 'Incrementado_b7c0ee59_2da6_492d_9c62_6396cbd61a4a',
@@ -67,7 +75,10 @@ class Model1(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Quitar campo(s)
+        ###################
+        # Quitar campo(s) #
+        ###################
+        
         alg_params = {
             'COLUMN': ['GID_0','NAME_0','GID_1','GID_2','HASC_2','CC_2','TYPE_2','NL_NAME 2','VARNAME_2','NL_NAME_1','NL_NAME_2',' ENGTYPE_2'],
             'INPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/Input/gadm41_USA_shp/gadm41_USA_2.shp',
@@ -79,7 +90,10 @@ class Model1(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Agregar campo que auto-incrementa 
+        ##################################### 
+        # Agregar campo que auto-incrementa #
+        #####################################
+        
         alg_params = {
             'FIELD_NAME': 'cid',
             'GROUP_FIELDS': [''],
