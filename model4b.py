@@ -49,13 +49,14 @@ class Model4b(QgsProcessingAlgorithm):
         # Drop field(s) - coast_lon # --> 21° comando (min 51)
         #############################
         
-        # que hace???
-        # Guarda el archivo final en csv
+        # Eliminamos columas
+        # Nos quedamos con coast_lat y coast_lon en lugar de xcoord e y coord
+      
       
         alg_params = {
-            'COLUMN': ['fid','cat','xcoord','ycoord','fid_2','cat_2','vertex_index','vertex_part','vertex_part','_index','angle\n'],
-            'INPUT': 'Calculated_76be0c4b_9407_42d6_b19d_6ba9837acb93',
-            'OUTPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/output/csvout.csv',
+            'COLUMN': ['fid','cat','xcoord','ycoord','fid_2','cat_2','vertex_index','vertex_part','vertex_part','_index','angle\n'], # Columnas a eliminar
+            'INPUT': 'Calculated_76be0c4b_9407_42d6_b19d_6ba9837acb93', # Layer que usamos como input
+            'OUTPUT': '/Users/fernandacortes/Desktop/Herramientas/Clase4/output/csvout.csv', # Guardamos el archivo final en csv
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
         outputs['DropFieldsCoast_lon'] = processing.run('native:deletecolumn', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
