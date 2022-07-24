@@ -65,7 +65,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ################################# 
-        # Field calculator - cat adjust # --> septimo comando
+        # Field calculator - cat adjust # --> 8° comando
         #################################
         
         # Correjimos variable cat para poder hacer el merge entre distout y nearout
@@ -104,7 +104,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ###########################
-        # Add geometry attributes # --> este sera el cuarto que no encontre? SI!
+        # Add geometry attributes # --> 4° comando
         ###########################
         alg_params = {
             'CALC_METHOD': 0,  # Layer CRS
@@ -141,7 +141,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ################################## 
-        # Join attributes by field value # --> 13° comando pero no se si lo debería haber hecho antes
+        # Join attributes by field value # --> 12° comando 
         ##################################
         
         #Merge
@@ -165,10 +165,10 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         #################### 
-        # Extract vertices # --> 11° comando
+        # Extract vertices # --> 13° comando
         ####################
         
-        #Utilizamos Centroids_nearest_coast_distance_joined? es el 13° comando
+        #Utilizamos Centroids_nearest_coast_distance_joined como input
         
         alg_params = {
             'INPUT': 'Joined_layer_7e820b8b_32f1_498a_bf16_7c406fb57fe0',
@@ -182,7 +182,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ###################################################### 
-        # Join attributes by field value - centroids y coast # --> noveno comando
+        # Join attributes by field value - centroids y coast # --> 10° comando
         ###################################################### 
         
         # Merge 
@@ -290,7 +290,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ############################## 
-        # Drop field(s) - cat_adjust # --> octavo comando
+        # Drop field(s) - cat_adjust # --> 9° comando
         ##############################
         
         alg_params = {
@@ -306,7 +306,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ############################## 
-        # Fix geometries - countries # --> este es el segundo que corre
+        # Fix geometries - countries # --> 2° comando
         ##############################
         
         # Corregimos geometrías en la layer countries
@@ -323,7 +323,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         #####################################
-        # Drop field(s) - centroids_w_coord # --> quinto comando
+        # Drop field(s) - centroids_w_coord # --> 6° comando
         #####################################
         
         #eliminamos columnas de centroid_w_coord
@@ -341,7 +341,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ################################ 
-        # Drop field(s) - fixgeo_coast # --> cuarto? falta lo de centroids_w_coord
+        # Drop field(s) - fixgeo_coast # --> 5° comando
         ################################
         
         alg_params = {
@@ -357,7 +357,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ############# 
-        # Centroids # --> tercer comando que corre
+        # Centroids # --> 3° comando
         ############# 
         
         # Calculamos el punto que está en el centro del país (centroide)
@@ -375,7 +375,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ##############
-        # v.distance # --> sexto comando
+        # v.distance # --> 7° comando
         ##############
         
         #Graficamos la distancia mínima entre el centroide y la costa
@@ -409,7 +409,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ########################################## 
-        # Drop field(s) - centroids_coast_joined # --> decimo comando
+        # Drop field(s) - centroids_coast_joined # --> 11° comando
         ##########################################
         
         #Eliminamos columnas de la layer que creamos anteriormente a partir de join
@@ -427,7 +427,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ######################## 
-        # Extract by attribute # --> 12° comando, lo vuelve a correr 14°
+        # Extract by attribute # --> 14° comando
         ########################
         alg_params = {
             'FIELD': 'distance',
@@ -444,7 +444,7 @@ class Model4b(QgsProcessingAlgorithm):
             return {}
 
         ##########################
-        # Fix geometries - coast # --> 1° primer comando que corre amely
+        # Fix geometries - coast # --> 1° comando
         ##########################
          
         # Corregimos geometrías en la layer coast
