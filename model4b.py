@@ -49,8 +49,8 @@ class Model4b(QgsProcessingAlgorithm):
         # Drop field(s) - coast_lon # --> 21° comando (min 51)
         #############################
         
-        # Eliminamos columas
-        # Nos quedamos con coast_lat y coast_lon en lugar de xcoord e y coord
+        # Eliminamos columnas
+        # Nos quedamos con coast_lat y coast_lon en lugar de xcoord e ycoord
       
       
         alg_params = {
@@ -69,8 +69,8 @@ class Model4b(QgsProcessingAlgorithm):
         # Field calculator - cat adjust # --> 8° comando
         #################################
         
-        # Correjimos variable cat para poder hacer el merge entre distout y nearout
-        # Queremos que cat comience en cero en ambas layers
+        # Correjimos variable "cat" para poder hacer el merge entre distout y nearout
+        # Queremos que cat comience en cero en ambas layers 
         
         alg_params = {
             'FIELD_LENGTH': 4,
@@ -91,6 +91,8 @@ class Model4b(QgsProcessingAlgorithm):
         ########################### 
         # Add geometry attributes # --> 17° comando (min 46:50)
         ###########################
+        
+        # Generamos los attributes para calcular la longitud y latitud de la costa
         
         alg_params = {
             'CALC_METHOD': 0,  # Layer CRS
@@ -347,8 +349,8 @@ class Model4b(QgsProcessingAlgorithm):
         
         alg_params = {
             'COLUMN': ['scalerank'], #eliminamos la columna scalerank
-            'INPUT': 'Fixed_geometries_60ce1434_02de_4dd7_8e76_bca42e4815d2',
-            'OUTPUT': parameters['Coastout']
+            'INPUT': 'Fixed_geometries_60ce1434_02de_4dd7_8e76_bca42e4815d2', #layer que utilizamos como input
+            'OUTPUT': parameters['Coastout'] #nombramos el output
         }
         outputs['DropFieldsFixgeo_coast'] = processing.run('native:deletecolumn', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
         results['Coastout'] = outputs['DropFieldsFixgeo_coast']['OUTPUT']
