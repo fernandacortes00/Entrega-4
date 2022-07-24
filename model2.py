@@ -25,7 +25,12 @@ class Model2(QgsProcessingAlgorithm):
         results = {}
         outputs = {}
 
-        # Warp (reproject)
+        ####################
+        # Warp (reproject) # --> 1° comando
+        ####################
+        
+        # Reproyectamos para que los países tengan el tamaño correcto
+   
         alg_params = {
             'DATA_TYPE': 0,  # Use Input Layer Data Type
             'EXTRA': '',
@@ -48,7 +53,13 @@ class Model2(QgsProcessingAlgorithm):
         if feedback.isCanceled():
             return {}
 
-        # Extract projection
+        ###################### 
+        # Extract projection # --> 2° comando
+        ######################
+        
+        # Creamos proyección permanente del raster (archivo .prj)
+        # Guardamos archivo gif (.tif)
+        
         alg_params = {
             'INPUT': outputs['WarpReproject']['OUTPUT'],
             'PRJ_FILE_CREATE': True
