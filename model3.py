@@ -55,12 +55,14 @@ class Modelo3(QgsProcessingAlgorithm):
         # Guardar objetos vectoriales en archivo # --> 8° comando
         ##########################################
         
+        # Guardamos en archivo csv
+        
         alg_params = {
             'DATASOURCE_OPTIONS': '',
             'INPUT': 'Estadistica_zonal_49815408_9934_4670_97ec_d691ac312251',
             'LAYER_NAME': '',
             'LAYER_OPTIONS': '',
-            'OUTPUT': 'C:/Users/Pc__/Desktop/Herramientas computacionales/Clase 4/Replicar paper/Output/raster_stats.gpkg',
+            'OUTPUT': 'C:/Users/Pc__/Desktop/Herramientas computacionales/Clase 4/Replicar paper/Output/raster_stats.csv',
             'OUTPUT': QgsProcessing.TEMPORARY_OUTPUT
         }
         outputs['GuardarObjetosVectorialesEnArchivo'] = processing.run('native:savefeatures', alg_params, context=context, feedback=feedback, is_child_algorithm=True)
@@ -90,7 +92,7 @@ class Modelo3(QgsProcessingAlgorithm):
         # Estadísticas de zona # --> 4° comando
         ########################
          
-        # Calculamos la media a nivel de county para el raster de la población en 1800
+        # Calculamos la media a nivel de país para el raster de la población en 1800
         
         alg_params = {
             'COLUMN_PREFIX': 'pop1800',
@@ -111,7 +113,7 @@ class Modelo3(QgsProcessingAlgorithm):
         # Estadísticas de zona # --> 6° comando
         ########################
         
-        # Calculamos la media a nivel de county para el raster de la población en el 2000
+        # Calculamos la media a nivel de país para el raster de la población en el 2000
         
         alg_params = {
             'COLUMN_PREFIX': 'pop2000',
@@ -150,7 +152,7 @@ class Modelo3(QgsProcessingAlgorithm):
         # Estadísticas de zona # --> 5° comando
         ########################
         
-        # Calculamos la media a nivel de county para el raster de la población en 1900
+        # Calculamos la media a nivel de país para el raster de la población en 1900
         
         alg_params = {
             'COLUMN_PREFIX': 'pop1900',
