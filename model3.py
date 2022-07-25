@@ -31,7 +31,7 @@ class Modelo3(QgsProcessingAlgorithm):
         outputs = {}
 
         ######################## 
-        # Estadísticas de zona #
+        # Estadísticas de zona # --> 3° comando
         ########################
         
         # Calculamos la media por país
@@ -52,7 +52,7 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ########################################## 
-        # Guardar objetos vectoriales en archivo #
+        # Guardar objetos vectoriales en archivo # --> 8° comando
         ##########################################
         
         alg_params = {
@@ -70,7 +70,7 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ####################### 
-        # Corregir geometrías #
+        # Corregir geometrías # --> 1° comando
         #######################
         
         # Corregimos geometrías automáticamente
@@ -87,8 +87,10 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ######################## 
-        # Estadísticas de zona #
+        # Estadísticas de zona # --> 4° comando
         ########################
+         
+        # Calculamos la media a nivel de county para el raster de la población en 1800
         
         alg_params = {
             'COLUMN_PREFIX': 'pop1800',
@@ -106,8 +108,10 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ######################## 
-        # Estadísticas de zona #
+        # Estadísticas de zona # --> 6° comando
         ########################
+        
+        # Calculamos la media a nivel de county para el raster de la población en el 2000
         
         alg_params = {
             'COLUMN_PREFIX': 'pop2000',
@@ -125,7 +129,7 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ################### 
-        # Quitar campo(s) #
+        # Quitar campo(s) # --> 2° comando
         ###################
         
         # Eliminamos columnas que no utilizamos
@@ -143,8 +147,10 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ########################
-        # Estadísticas de zona #
+        # Estadísticas de zona # --> 5° comando
         ########################
+        
+        # Calculamos la media a nivel de county para el raster de la población en 1900
         
         alg_params = {
             'COLUMN_PREFIX': 'pop1900',
@@ -162,7 +168,7 @@ class Modelo3(QgsProcessingAlgorithm):
             return {}
 
         ######################## 
-        # Estadísticas de zona #
+        # Estadísticas de zona # --> 7° comando
         ########################
         
         alg_params = {
